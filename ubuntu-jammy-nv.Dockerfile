@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM cuda:12.3.2-base-ubuntu22.04
 
 RUN apt update \
     && apt install -y ca-certificates \
