@@ -1,5 +1,9 @@
 FROM nvidia/cuda:12.3.2-base-ubuntu22.04
 
+# install nvidia-docker bins for controller
+RUN curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey |  apt-key add - 
+RUN curl -s -L https://nvidia.github.io/nvidia-docker/ubuntu20.04/nvidia-docker.list | tee /etc/apt/sources.list.d/nvidia-docker.list
+
 RUN apt update \
     && apt install -y ca-certificates \
     wget curl iptables supervisor \
@@ -68,6 +72,8 @@ RUN curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOS
 # Create a symlink to the docker binary in /usr/local/lib/docker/cli-plugins
 # for users which uses 'docker compose' instead of 'docker-compose'
 RUN ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
+
+RUN apt-get update && apt-get install -y nvidia-docker2 && apt-get clean all
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["bash"]
