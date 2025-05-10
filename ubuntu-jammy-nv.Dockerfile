@@ -79,7 +79,10 @@ RUN curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOS
 # for users which uses 'docker compose' instead of 'docker-compose'
 RUN ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
 
+# install additional binaries
 RUN apt-get update && apt-get install -y nvidia-docker2 && apt-get clean all
+RUN curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["bash"]
