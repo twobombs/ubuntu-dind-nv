@@ -1,3 +1,4 @@
+# modified for ThereminQ stack use with NV, K3d and Rancher integration
 FROM nvidia/cuda:12.3.2-base-ubuntu22.04
 
 # Install common dependencies
