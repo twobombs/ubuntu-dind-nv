@@ -1,5 +1,11 @@
 FROM nvidia/cuda:12.3.2-base-ubuntu22.04
 
+# Install common dependencies
+RUN set -eux; \
+    apt-get update && apt-get install -y \
+    ca-certificates wget curl iptables supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
 # install nvidia-docker bins for controller
 RUN curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey |  apt-key add - 
 RUN curl -s -L https://nvidia.github.io/nvidia-docker/ubuntu20.04/nvidia-docker.list | tee /etc/apt/sources.list.d/nvidia-docker.list
