@@ -83,6 +83,8 @@ RUN ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker
 RUN apt-get update && apt-get install -y nvidia-docker2 && apt-get clean all
 RUN curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 COPY rancher.sh /
+RUN git clone https://github.com/opensearch-project/helm-charts.git
+RUN git clone https://github.com/twobombs/thereminq-helm.git
 
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["bash"]
