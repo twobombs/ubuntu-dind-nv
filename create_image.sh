@@ -1,12 +1,11 @@
 #!/bin/bash
 set -e
 
-DOCKER_VERSION="28.1.1"
-BUILD_NUMBER="0"
+DOCKER_VERSION="29.0.0"
+BUILD_NUMBER="1"
 LATEST_UBUNTU_VERSION="24.04"
 
 declare -A ubuntu_versions=(
-  ["20.04"]="focal"
   ["22.04"]="jammy"
   ["24.04"]="noble"
 )

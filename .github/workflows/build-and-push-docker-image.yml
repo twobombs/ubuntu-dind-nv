@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  CURRENT_VERSION: 28.1.1
-  BUILD_NUMBER: 0
+  CURRENT_VERSION: 29.0.0
+  BUILD_NUMBER: 1
   LATEST_UBUNTU_VERSION: "24.04"
 
 jobs:
@@ -16,15 +16,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - ubuntu_version: "20.04"
-            ubuntu_name: "focal"
           - ubuntu_version: "22.04"
             ubuntu_name: "jammy"
           - ubuntu_version: "24.04"
             ubuntu_name: "noble"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3

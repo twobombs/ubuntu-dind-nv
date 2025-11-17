@@ -4,9 +4,9 @@ ARG UBUNTU_VERSION="24.04"
 FROM ubuntu:${UBUNTU_VERSION}
 
 ARG UBUNTU_VERSION
-ENV DOCKER_VERSION=28.1.1 \
-    DOCKER_COMPOSE_VERSION=v2.35.1 \
-    BUILDX_VERSION=v0.23.0
+ENV DOCKER_VERSION=29.0.0 \
+    DOCKER_COMPOSE_VERSION=v2.40.3 \
+    BUILDX_VERSION=v0.29.1
 
 #
 # Systemd installation
@@ -90,6 +90,17 @@ RUN curl --retry 5 --retry-max-time 40 \
     chmod 755 /usr/local/bin/docker-compose && \
     mkdir -p /usr/local/lib/docker/cli-plugins && \
     ln -s /usr/local/bin/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
+
+# TODO: Remove when this issue is fixed: https://github.com/nestybox/sysbox/issues/973
+# Temporarly fix containerd version
+RUN set -eux; \
+    . /etc/os-release; \
+    if [ -z "${VERSION_ID:-}" ] || [ -z "${VERSION_CODENAME:-}" ]; then \
+        echo "Unable to detect Ubuntu version metadata"; exit 1; \
+    fi; \
+    apt-get update; \
+    apt-get install -y --allow-downgrades "containerd.io=1.7.28-1~ubuntu.${VERSION_ID}~${VERSION_CODENAME}" && \
+    apt-mark hold containerd.io
 
 # Make use of stopsignal (instead of sigterm) to stop systemd containers.
 STOPSIGNAL SIGRTMIN+3
